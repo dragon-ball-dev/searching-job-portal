@@ -53,10 +53,14 @@ public class Job extends DateAudit {
     @JoinColumn(name = "recruiter_id")
     private Recruiter recruiter;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @OneToMany(mappedBy = "job")
     private List<Recruitment> recruitments;
 
-    public Job(JobRequest jobRequest, Recruiter recruiter) {
+    public Job(JobRequest jobRequest,Category category, Recruiter recruiter) {
         this.jobTitle = jobRequest.getJobTitle();
         this.level = jobRequest.getLevel();
         this.typesOfCV = jobRequest.getTypesOfCV();
@@ -68,7 +72,8 @@ public class Job extends DateAudit {
         this.welfare = jobRequest.getWelfare();
         this.language = jobRequest.getLanguage();
         this.status = JobStatus.ENABLE;
-        this.deadline = jobRequest.getDeadline();
+        this.deadline = LocalDateTime.parse(jobRequest.getDeadline());
+        this.category = category;
         this.recruiter = recruiter;
     }
 }

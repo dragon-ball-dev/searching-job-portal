@@ -161,9 +161,9 @@ export function deleteCVByID(id) {
 }
 
 
-export function getAllJobs(pageNo, pageSize, level, min, max, jobName, companyName) {
+export function getAllJobs(pageNo, pageSize, level, min, max, jobName, companyName, categoryId) {
     return request({
-        url: API_BASE_URL + "/jobseeker/job-search?pageNo="+ pageNo +"&pageSize="+pageSize+"&level="+level+"&minSalary="+min+"&jobName="+jobName+"&maxSalary="+max+"&companyName="+companyName,
+        url: API_BASE_URL + "/jobseeker/job-search?pageNo="+ pageNo +"&pageSize="+pageSize+"&level="+level+"&minSalary="+min+"&jobName="+jobName+"&maxSalary="+max+"&companyName="+companyName+"&categoryId="+categoryId,
         method: 'GET'
     })
 }
@@ -259,6 +259,14 @@ export function getAdvertisement(pageNo, pageSize, title) {
     });
 }
 
+export function getCategory(pageNo, pageSize) {
+
+    return request({
+        url: API_BASE_URL + "/admin/category?pageNo="+pageNo+"&pageSize="+pageSize,
+        method: 'GET'
+    });
+}
+
 export function getAdvertisementById(id) {
 
     if(!localStorage.getItem(ACCESS_TOKEN)) {
@@ -268,6 +276,31 @@ export function getAdvertisementById(id) {
     return request({
         url: API_BASE_URL + "/admin/advertisement/"+id,
         method: 'GET'
+    });
+}
+
+export function getCategoryById(id) {
+
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/admin/category/"+id,
+        method: 'GET'
+    });
+}
+
+export function editCategoryById(id, categoryRequest) {
+
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: API_BASE_URL + "/admin/category/"+id,
+        method: 'PUT',
+        body: JSON.stringify(categoryRequest)
     });
 }
 
@@ -344,6 +377,29 @@ export function editInfo(phoneRequest) {
         url: API_BASE_URL + "/jobseeker",
         method: 'PUT',
         body: JSON.stringify(phoneRequest)
+    });
+}
+
+export function addCategory(categoryRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+    
+    return request({
+        url: API_BASE_URL + "/admin/category",
+        method: 'POST',
+        body: JSON.stringify(categoryRequest)
+    });
+}
+
+export function getAllCategory() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
+    
+    return request({
+        url: API_BASE_URL + "/admin/category",
+        method: 'GET'
     });
 }
 

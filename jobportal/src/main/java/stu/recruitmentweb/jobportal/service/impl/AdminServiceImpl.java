@@ -8,14 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import stu.recruitmentweb.jobportal.domain.models.Advertisement;
+import stu.recruitmentweb.jobportal.domain.models.Category;
 import stu.recruitmentweb.jobportal.domain.models.User;
+import stu.recruitmentweb.jobportal.domain.payload.request.CategoryRequest;
 import stu.recruitmentweb.jobportal.domain.payload.response.AdvertisementResponse;
 import stu.recruitmentweb.jobportal.domain.payload.response.JobDetailResponse;
+import stu.recruitmentweb.jobportal.domain.payload.response.MessageResponse;
 import stu.recruitmentweb.jobportal.domain.payload.response.UserDetailResponse;
-import stu.recruitmentweb.jobportal.repository.AdvertisementRepository;
-import stu.recruitmentweb.jobportal.repository.AdvertisementRepositoryCustom;
-import stu.recruitmentweb.jobportal.repository.JobRepository;
-import stu.recruitmentweb.jobportal.repository.UserRepository;
+import stu.recruitmentweb.jobportal.exception.BadRequestException;
+import stu.recruitmentweb.jobportal.repository.*;
 import stu.recruitmentweb.jobportal.service.AdminService;
 import stu.recruitmentweb.jobportal.service.BaseService;
 import stu.recruitmentweb.jobportal.service.FileStorageService;
@@ -34,6 +35,7 @@ public class AdminServiceImpl extends BaseService implements AdminService {
     private final AdvertisementRepository advertisementRepository;
     private final FileStorageService fileStorageService;
     private final AdvertisementRepositoryCustom advertisementRepositoryCustom;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Page<JobDetailResponse> getPageJobOfRecruiters(Integer pageNo, Integer pageSize) {
@@ -106,6 +108,35 @@ public class AdminServiceImpl extends BaseService implements AdminService {
         advertisement.setTitle(title);
 
         advertisementRepository.save(advertisement);
+    }
+
+    @Override
+    public Page<Category> getPageCategory(Integer pageNo, Integer pageSize) {
+        int page = pageNo == 0 ? pageNo : pageNo - 1;
+        Pageable pageable = PageRequest.of(page, pageSize);
+        List<Category> categories = categoryRepository.findAll();
+        return new PageImpl<>(categories, pageable, categories.size());
+    }
+
+    @Override
+    public MessageResponse addCategory(CategoryRequest categoryRequest) {
+        Category category = new Category();
+        category.setName(categoryRequest.getName());
+        categoryRepository.save(category);
+        return MessageResponse.builder().message("Thêm danh mục thành công").build();
+    }
+
+    @Override
+    public Category getCategory(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new BadRequestException("Danh mục không tồn tại"));
+    }
+
+    @Override
+    public MessageResponse updateCategory(Long id, CategoryRequest categoryRequest) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new BadRequestException("Danh mục không tồn tại"));
+        category.setName(categoryRequest.getName());
+        categoryRepository.save(category);
+        return MessageResponse.builder().message("Cập nhật thành công").build();
     }
 
     private User getUser(){

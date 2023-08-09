@@ -21,7 +21,8 @@ public interface JobseekerService {
                                                  BigDecimal maxSalary,
                                                  String companyName,
                                                  String jobName,
-                                                 String level);
+                                                 String level,
+                                                 Long categoryId);
 
     String addCV(String name, MultipartFile fileCv);
 

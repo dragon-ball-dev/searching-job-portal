@@ -75,10 +75,10 @@ public class JobseekerServiceImpl extends BaseService implements JobseekerServic
     }
 
     @Override
-    public Page<JobDetailResponse> getPageForJobseeker(Integer pageNo, Integer pageSize, BigDecimal minSalary, BigDecimal maxSalary, String companyName, String jobName, String level) {
+    public Page<JobDetailResponse> getPageForJobseeker(Integer pageNo, Integer pageSize, BigDecimal minSalary, BigDecimal maxSalary, String companyName, String jobName, String level,Long categoryId) {
         int page = pageNo == 0 ? pageNo : pageNo - 1;
         Pageable pageable = PageRequest.of(page, pageSize);
-        return mapper.convertToResponsePage(jobRepositoryCustom.searchJob(pageNo, pageSize, minSalary, maxSalary, companyName, jobName, level),JobDetailResponse.class, pageable);
+        return mapper.convertToResponsePage(jobRepositoryCustom.searchJob(pageNo, pageSize, minSalary, maxSalary, companyName, jobName, level, categoryId),JobDetailResponse.class, pageable);
     }
 
     @Override
@@ -118,7 +118,20 @@ public class JobseekerServiceImpl extends BaseService implements JobseekerServic
     @Override
     public void submitRecruitment(Long jobId) {
         if(getUser().getJobseeker().getCurriculumVitaeList().size() == 0) {
+
             throw new BadRequestException("Bạn cần upload CV trước khi ứng tuyển!!");
+        }
+        Boolean isFlag = false;
+        for (CurriculumVitae cv : getUser().getJobseeker().getCurriculumVitaeList()){
+            if (Boolean.FALSE.equals(cv.getStatus()) ){
+                isFlag = false;
+            } else {
+                isFlag = true;
+                break;
+            }
+        }
+        if (isFlag.equals(false)) {
+            throw new BadRequestException("Bạn chưa chọn cv nào làm cv chính");
         }
         for (Recruitment r : recruitmentRepository.findByJobseeker(getUser().getJobseeker())) {
             if (jobId.equals(r.getJob().getId())) {

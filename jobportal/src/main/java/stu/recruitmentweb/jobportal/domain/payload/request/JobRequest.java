@@ -25,8 +25,9 @@ public class JobRequest {
     private String description;
     @NotNull
     private String requireJob;
+    private Long category;
     private String welfare;
     private String language;
     @NotNull
-    private LocalDateTime deadline;
+    private String deadline;
 }

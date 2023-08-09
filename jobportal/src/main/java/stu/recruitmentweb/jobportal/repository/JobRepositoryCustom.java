@@ -13,5 +13,6 @@ public interface JobRepositoryCustom {
                         BigDecimal maxSalary,
                         String companyName,
                         String jobName,
-                        String level);
+                        String level,
+                        Long categoryId);
 }

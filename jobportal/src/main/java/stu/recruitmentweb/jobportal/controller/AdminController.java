@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import stu.recruitmentweb.jobportal.domain.payload.request.CategoryRequest;
 import stu.recruitmentweb.jobportal.domain.payload.response.AdvertisementResponse;
 import stu.recruitmentweb.jobportal.domain.payload.response.JobDetailResponse;
 import stu.recruitmentweb.jobportal.domain.payload.response.UserDetailResponse;
@@ -22,6 +23,27 @@ public class AdminController {
     private ResponseEntity<Page<JobDetailResponse>> getAllJob(@RequestParam Integer pageNo,
                                                               @RequestParam Integer pageSize) {
         return ResponseEntity.ok(adminService.getPageJobOfRecruiters(pageNo, pageSize));
+    }
+
+    @GetMapping("/category")
+    private ResponseEntity<?> getAllCategory(@RequestParam Integer pageNo,
+                                             @RequestParam Integer pageSize) {
+        return ResponseEntity.ok(adminService.getPageCategory(pageNo, pageSize));
+    }
+
+    @GetMapping("/category/{id}")
+    private ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.getCategory(id));
+    }
+
+    @PutMapping("/category/{id}")
+    private ResponseEntity<?> updateCategoryById(@PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
+        return ResponseEntity.ok(adminService.updateCategory(id, categoryRequest));
+    }
+
+    @PostMapping("/category")
+    private ResponseEntity<?> addCategory(@RequestBody CategoryRequest categoryRequest) {
+        return ResponseEntity.ok(adminService.addCategory(categoryRequest));
     }
 
     @GetMapping("/account-register")

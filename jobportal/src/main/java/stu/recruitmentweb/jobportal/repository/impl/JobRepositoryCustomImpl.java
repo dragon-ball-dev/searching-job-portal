@@ -29,12 +29,13 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom {
 
     @Override
     public Page<Job> searchJob(Integer pageNo,
-                                             Integer pageSize,
-                                             BigDecimal minSalary,
-                                             BigDecimal maxSalary,
-                                             String companyName,
-                                             String jobName,
-                                             String level) {
+                               Integer pageSize,
+                               BigDecimal minSalary,
+                               BigDecimal maxSalary,
+                               String companyName,
+                               String jobName,
+                               String level,
+                               Long categoryId) {
         int page = pageNo == 0 ? pageNo : pageNo - 1;
         Pageable pageable = PageRequest.of(page, pageSize);
 
@@ -55,31 +56,36 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom {
             strQuery.append(" AND (( min_salary between 0 and :maxSalary ) OR ( max_salary between 0 and :maxSalary ))");
             strQuery.append(" ");
             params.put("maxSalary", maxSalary);
-        } else if (Objects.nonNull(minSalary)){
+        } else if (Objects.nonNull(minSalary)) {
             strQuery.append(" AND (( min_salary between :minSalary and :maxSalary ) OR ( max_salary between :minSalary and :maxSalary ))");
             params.put("minSalary", minSalary);
             params.put("maxSalary", MAX_VALUE);
         }
 
-        if (Objects.nonNull(companyName) && !companyName.isEmpty()){
+        if (Objects.nonNull(companyName) && !companyName.isEmpty()) {
             strQuery.append(" AND tc.name LIKE :companyName");
-            params.put("companyName", "%" +companyName+"%");
+            params.put("companyName", "%" + companyName + "%");
         }
 
         if (Objects.nonNull(jobName) && !jobName.isEmpty()) {
             strQuery.append(" AND tj.job_title LIKE :jobName");
-            params.put("jobName", "%" +jobName+"%");
+            params.put("jobName", "%" + jobName + "%");
         }
 
         if (Objects.nonNull(level) && !level.isEmpty()) {
             strQuery.append(" AND tj.level LIKE :level");
-            params.put("level", "%" +level+"%");
+            params.put("level", "%" + level + "%");
+        }
+
+        if (Objects.nonNull(categoryId)) {
+            strQuery.append(" AND tj.category_id = :id");
+            params.put("id", categoryId);
         }
 
         String strSelectQuery = "SELECT * " + strQuery;
 
         String strCountQuery = "SELECT COUNT(DISTINCT tj.id)" + strQuery;
 
-        return BaseRepository.getPagedNativeQuery(em,strSelectQuery, strCountQuery, params, pageable, Job.class);
+        return BaseRepository.getPagedNativeQuery(em, strSelectQuery, strCountQuery, params, pageable, Job.class);
     }
 }

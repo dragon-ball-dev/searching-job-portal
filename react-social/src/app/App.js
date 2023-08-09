@@ -43,6 +43,9 @@ import EditAdvertisement from '../admin/edit/EditAdvertisement';
 import SendMail from '../recruiter/SendEmail';
 import EditJob from '../recruiter/edit/EditJob';
 import ProfileRecruiter from '../recruiter/ProfileRecruiter';
+import CatgoryManagement from '../admin/CategoryManagement';
+import EditCategory from '../admin/edit/EditCategory';
+import AddCategory from '../admin/AddCategory';
 
 
 
@@ -170,6 +173,13 @@ class App extends Component {
               username={this.state.username}
               onLogout={this.handleLogout} {...props} />}>
           </Route>
+          <Route exact path="/admin/category-manager"
+            render={(props) => <CatgoryManagement
+              authenticated={this.state.authenticated}
+              roleName={this.state.role}
+              username={this.state.username}
+              onLogout={this.handleLogout} {...props} />}>
+          </Route>
           <Route exact path="/admin/advertisement/:id"
             render={(props) => <EditAdvertisement
               authenticated={this.state.authenticated}
@@ -177,8 +187,22 @@ class App extends Component {
               username={this.state.username}
               onLogout={this.handleLogout} {...props} />}>
           </Route>
+          <Route exact path="/admin/category/:id"
+            render={(props) => <EditCategory
+              authenticated={this.state.authenticated}
+              roleName={this.state.role}
+              username={this.state.username}
+              onLogout={this.handleLogout} {...props} />}>
+          </Route>
           <Route exact path="/admin/add-advertisement"
             render={(props) => <AddAdvertisement
+              authenticated={this.state.authenticated}
+              roleName={this.state.role}
+              username={this.state.username}
+              onLogout={this.handleLogout} {...props} />}>
+          </Route>
+          <Route exact path="/admin/add-category"
+            render={(props) => <AddCategory
               authenticated={this.state.authenticated}
               roleName={this.state.role}
               username={this.state.username}

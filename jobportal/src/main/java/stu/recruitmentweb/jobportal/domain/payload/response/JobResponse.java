@@ -2,6 +2,7 @@ package stu.recruitmentweb.jobportal.domain.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;
+import stu.recruitmentweb.jobportal.domain.models.Category;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,5 +23,6 @@ public class JobResponse {
     private String language;
     private String status;
     private LocalDateTime deadline;
+    private Category category;
 
 }

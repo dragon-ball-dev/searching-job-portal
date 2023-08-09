@@ -25,8 +25,18 @@ class SidebarNav extends React.Component {
                     </NavLink>
                 </li>
                 <li className="sidebar-item">
+                    <NavLink to="/admin/category-manager" className="sidebar-link">
+                        <i className="align-middle" data-feather="sliders"></i> <span className="align-middle">Quản lý danh mục</span>
+                    </NavLink>
+                </li>
+                <li className="sidebar-item">
                     <NavLink to="/admin/add-advertisement" className="sidebar-link">
                         <i className="align-middle" data-feather="sliders"></i> <span className="align-middle">Thêm quảng cáo</span>
+                    </NavLink>
+                </li>
+                <li className="sidebar-item">
+                    <NavLink to="/admin/add-category" className="sidebar-link">
+                        <i className="align-middle" data-feather="sliders"></i> <span className="align-middle">Thêm danh mục</span>
                     </NavLink>
                 </li>
             </ul>

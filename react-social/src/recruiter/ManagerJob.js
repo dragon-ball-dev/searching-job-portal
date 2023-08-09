@@ -92,6 +92,7 @@ class ManagerJob extends React.Component {
 									<tr>
 										<th style={{ width: "30%" }}>Tên Công Việc</th>
 										<th style={{ width: "25%" }}>Level</th>
+										<th style={{ width: "25%" }}>Danh Mục</th>
 										<th class="d-none d-md-table-cell" style={{ width: "25%" }}>Địa Chỉ</th>
 										<th style={{ width: "10%" }}>Tình Trạng</th>
 										<th style={{ width: "25%" }}>Actions</th>
@@ -103,6 +104,7 @@ class ManagerJob extends React.Component {
 											<tr>
 												<td>{job.jobTitle}</td>
 												<td>{job.level}</td>
+												<td>{job.category && job.category.name}</td>
 												<td class="d-none d-md-table-cell">{job.address}</td>
 												<td style={{ color: "green" }}>{job.status === "ENABLE" ? "Hiện Thị" : "Ẩn"}</td>
 												<td class="table-action">

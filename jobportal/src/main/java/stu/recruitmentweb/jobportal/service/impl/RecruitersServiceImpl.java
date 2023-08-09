@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,6 +48,7 @@ public class RecruitersServiceImpl extends BaseService implements RecruitersServ
     private final RecruitmentRepository recruitmentRepository;
     private final RecruitmentRepositoryCustom recruitmentRepositoryCustom;
     private final FileStorageServiceImpl fileStorageService;
+    private final CategoryRepository categoryRepository;
 
     //RECRUITER
 
@@ -133,7 +135,7 @@ public class RecruitersServiceImpl extends BaseService implements RecruitersServ
     //JOB
     @Override
     public String recruiterAddJob(JobRequest jobRequest) {
-        Job job = new Job(jobRequest, recruiterRepository.findByUser(getUser()).orElseThrow(() ->
+        Job job = new Job(jobRequest,categoryRepository.findById(jobRequest.getCategory()).get(), recruiterRepository.findByUser(getUser()).orElseThrow(() ->
                 new IllegalArgumentException("Nhà tuyển dụng không tồn tại!!")));
         jobRepository.save(job);
         return "Đăng tin tuyển dụng thành công!!!";
@@ -161,7 +163,7 @@ public class RecruitersServiceImpl extends BaseService implements RecruitersServ
         job.setAddress(jobRequest.getAddress());
         job.setJobTitle(jobRequest.getJobTitle());
         job.setDescription(jobRequest.getDescription());
-        job.setDeadline(jobRequest.getDeadline());
+        job.setDeadline(LocalDateTime.parse(jobRequest.getDeadline()));
         job.setRequireJob(jobRequest.getRequireJob());
         job.setLevel(jobRequest.getLevel());
         job.setMinSalary(jobRequest.getMinSalary());
