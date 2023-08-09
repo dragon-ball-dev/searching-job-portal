@@ -44,7 +44,7 @@ class ManagerJob extends React.Component {
         deleteJobById(id)
         .then().catch(message => {
             Alert.success("Ẩn công việc thành công")
-			window.location.reload();
+			this.loadJob();
         });
     }
 
