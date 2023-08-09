@@ -14,7 +14,7 @@ class AppHeader extends Component {
                                 <div class="col-lg-3 col-md-2">
 
                                     <div class="logo">
-                                        <a href="index.html"><img src="../assets/img/logo/logo.png" alt="" /></a>
+                                        <a href="index.html"><img src="../assets/img/logo/logo.png" alt="" style={{width: "50%" , borderRadius: "15px"}}/></a>
                                     </div>
                                 </div>
                                 <div class="col-lg-9 col-md-9">
