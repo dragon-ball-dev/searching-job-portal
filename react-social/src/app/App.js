@@ -268,7 +268,7 @@ class App extends Component {
         ) : ""}
         <div className="app-body">
           <Switch>
-            <Route exact path="/" component={Home}></Route>
+            <Route exact path="/" component={Home} ></Route>
             <Route exact path="/job-list" component={JobList}></Route>
             <Route exact path="/advertisement" component={Advertisement}></Route>
             <Route exact path="/contact" component={Contact}></Route>

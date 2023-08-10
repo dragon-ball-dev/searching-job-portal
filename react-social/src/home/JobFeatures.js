@@ -14,7 +14,7 @@ class JobFeatures extends React.Component {
     }
 
     loadJob() {
-        getAllJobs(1, 5, '', '', '', '','')
+        getAllJobs(1, 5, '', '', '', '','','')
             .then(response => {
                 console.log("Response:", response)
                 this.setState({
