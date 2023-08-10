@@ -158,7 +158,7 @@ class JobDetails extends React.Component {
                                     <span>Hành trình đồng hàng Photographer</span>
                                     <p>{this.state.description}</p>
                                     <img
-                                        src={this.state.image && this.state.image.indexOf("http") !== -1 ? this.state.image : `http://localhost:8080/image/` + this.state.image.replace('photographer/files/', '')}
+                                        src={this.state.image === null ? ""  : this.state.image.indexOf("http") !== -1 ? this.state.image : `http://localhost:8080/image/` + this.state.image.replace('photographer/files/', '')}
                                         alt="Logo" style={{ height: "100px", width: "100px", marginBottom: "5px" , marginLeft :"40px" }} />
 
                                     <ul>
