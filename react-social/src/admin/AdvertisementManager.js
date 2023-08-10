@@ -114,7 +114,7 @@ class AdvertisementManager extends React.Component {
                                         return (
                                             <tr>
                                                 <td>{adv.title}</td>
-                                                <td><img src={`http://localhost:8080/image/` + adv.image === null ? "" : adv.image.replace('photographer/files/', '')} height={"100px"} width={"100px"} /></td>
+                                                <td><img  src={`http://localhost:8080/image/`+ adv.image.replace('photographer/files/','')} height={"100px"} width={"100px"} /></td>
                                                 <td class="d-none d-md-table-cell">{adv.description}</td>
                                                 <td class="table-action">
 

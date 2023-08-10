@@ -91,9 +91,9 @@ class ManagerJob extends React.Component {
 								<thead>
 									<tr>
 										<th style={{ width: "30%" }}>Tên Công Việc</th>
-										<th style={{ width: "25%" }}>Level</th>
-										<th style={{ width: "25%" }}>Danh Mục</th>
-										<th class="d-none d-md-table-cell" style={{ width: "25%" }}>Địa Chỉ</th>
+										<th style={{ width: "15%" }}>Level</th>
+										<th style={{ width: "15%" }}>Danh Mục</th>
+										<th class="d-none d-md-table-cell" style={{ width: "15%" }}>Địa Chỉ</th>
 										<th style={{ width: "10%" }}>Tình Trạng</th>
 										<th style={{ width: "25%" }}>Actions</th>
 									</tr>

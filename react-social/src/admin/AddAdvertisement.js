@@ -44,6 +44,8 @@ class AddAdvertisement extends React.Component {
             for (const key of Object.keys(this.state.image)) {
                 formData.append('image', this.state.image[key]);
             }
+        } else {
+            Alert.error("Vui lòng upload ảnh quảng cáo")
         }
         formData.append('description',this.state.description)
         FileService.uploadImageOfAdvertisement(formData).then((response) => {

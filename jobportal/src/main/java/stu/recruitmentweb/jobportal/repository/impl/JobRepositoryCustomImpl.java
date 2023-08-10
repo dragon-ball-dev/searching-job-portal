@@ -88,4 +88,13 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom {
 
         return BaseRepository.getPagedNativeQuery(em, strSelectQuery, strCountQuery, params, pageable, Job.class);
     }
+
+    @Override
+    public Page<Job> getAllJob(Pageable pageable) {
+        Map<String, Object> params = new HashMap<>();
+        String strSelectQuery = "SELECT * " + FROM_TABLE;
+
+        String strCountQuery = "SELECT COUNT(DISTINCT tj.id)" + FROM_TABLE;
+        return BaseRepository.getPagedNativeQuery(em, strSelectQuery, strCountQuery, params, pageable, Job.class);
+    }
 }

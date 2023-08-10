@@ -205,7 +205,7 @@ const AddJob = (props) => {
                     </div>
                   </div>
                   <button type="submit" className="btn btn-primary">Thêm</button>
-                  <Link to="/" className="btn btn-secondary ms-2">Hủy</Link>
+                  <Link to="/recruiter/manager-job" className="btn btn-secondary ms-2">Hủy</Link>
                 </form>
               </div>
             </div>

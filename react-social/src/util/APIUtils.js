@@ -316,14 +316,14 @@ export function deleteAdvertisement(id) {
     });
 }
 
-export function getAllJobOfRecruiter() {
+export function getAllJobOfRecruiter(pageNo, pageSize) {
 
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: API_BASE_URL + "/admin/job?pageNo=1&pageSize=100",
+        url: API_BASE_URL + "/admin/job?pageNo="+pageNo+"&pageSize="+pageSize,
         method: 'GET'
     });
 }
@@ -354,14 +354,14 @@ export function getAllJobOfRecruiterById() {
 }
 
 
-export function getAllAccount() {
+export function getAllAccount(pageNo, pageSize) {
 
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: API_BASE_URL + "/admin/account-register?pageNo=1&pageSize=100",
+        url: API_BASE_URL + "/admin/account-register?pageNo="+pageNo+"&pageSize="+pageSize,
         method: 'GET'
     });
 }

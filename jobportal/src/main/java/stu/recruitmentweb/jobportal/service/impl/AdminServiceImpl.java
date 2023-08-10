@@ -36,23 +36,22 @@ public class AdminServiceImpl extends BaseService implements AdminService {
     private final FileStorageService fileStorageService;
     private final AdvertisementRepositoryCustom advertisementRepositoryCustom;
     private final CategoryRepository categoryRepository;
+    private final JobRepositoryCustom jobRepositoryCustom;
 
     @Override
     public Page<JobDetailResponse> getPageJobOfRecruiters(Integer pageNo, Integer pageSize) {
         int page = pageNo == 0 ? pageNo : pageNo - 1;
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<JobDetailResponse> list = mapper.convertToResponseList(jobRepository.findAll(), JobDetailResponse.class);
-        return new PageImpl<>(list, pageable, list.size());
+
+        return mapper.convertToResponsePage(jobRepositoryCustom.getAllJob(pageable), JobDetailResponse.class, pageable);
     }
 
     @Override
     public Page<UserDetailResponse> getPageAccountManager(Integer pageNo, Integer pageSize) {
         int page = pageNo == 0 ? pageNo : pageNo - 1;
         Pageable pageable = PageRequest.of(page, pageSize);
-        List<UserDetailResponse> list = mapper.convertToResponseList(
-                userRepository.findAll().stream().filter(i -> !i.getEmail().equals("master@gmail.com"))
-                        .collect(Collectors.toList()), UserDetailResponse.class);
-        return new PageImpl<>(list, pageable, list.size());
+
+        return mapper.convertToResponsePage(userRepository.getAllAccount(pageable), UserDetailResponse.class, pageable);
     }
 
     @Override

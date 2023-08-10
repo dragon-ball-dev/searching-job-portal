@@ -1,6 +1,7 @@
 package stu.recruitmentweb.jobportal.repository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import stu.recruitmentweb.jobportal.domain.models.Job;
 
 
@@ -15,4 +16,6 @@ public interface JobRepositoryCustom {
                         String jobName,
                         String level,
                         Long categoryId);
+
+    Page<Job> getAllJob(Pageable pageable);
 }

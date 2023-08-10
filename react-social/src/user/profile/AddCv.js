@@ -43,33 +43,40 @@ class AddCv extends React.Component {
         event.preventDefault();
         const formData = new FormData();
         formData.append('name', this.state.name)
+        
 
-        for (const key of Object.keys(this.state.files)) {
-            formData.append('cv', this.state.files[key]);
+        if (this.state.files) {
+            for (const key of Object.keys(this.state.files)) {
+                formData.append('cv', this.state.files[key]);
+                checkFileSize(this.state.files[key])
+            }
+        } else {
+            Alert.error("Vui lòng upload file cv");
         }
 
 
-        
-        FileService.uploadImage(formData).then((response) => {
+
+        FileService.uploadImage(formData)
+        .then((response) => {
             console.log(response.data);
-            Alert.success("Thêm CV thành công!!");
+                Alert.success('Thêm CV mới thành công');
             this.setState({
                 name: '',
                 files: null,
             })
         }).catch(error => {
-            console.log(error);
+            console.log(error && error.message);
         });
     }
 
     render() {
-        if (!this.props.authenticated ) {
+        if (!this.props.authenticated) {
             return <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: this.props.location }
-              }} />;
-          }
+                to={{
+                    pathname: "/login",
+                    state: { from: this.props.location }
+                }} />;
+        }
         return (
             <div className="wrapper">
                 <nav id="sidebar" className="sidebar js-sidebar">
@@ -82,7 +89,7 @@ class AddCv extends React.Component {
                 </nav>
 
                 <div className="main">
-    
+
                     <main className="content">
                         <div className="container-fluid p-0">
                             <h1 className="h3 mb-3"><strong>Dashboard</strong></h1>
@@ -95,7 +102,7 @@ class AddCv extends React.Component {
                                     <form onSubmit={this.handleSubmit}>
                                         <div class="mb-3">
                                             <label class="form-label">Tên CV</label>
-                                            <input type="text" class="form-control"  name='name'
+                                            <input type="text" class="form-control" name='name'
                                                 value={this.state.name} onChange={this.handleInputChange} />
                                         </div>
                                         <div class="mb-3">
@@ -113,7 +120,18 @@ class AddCv extends React.Component {
             </div>
         )
     }
-    
+
 }
+
+function checkFileSize(file) {
+    const fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
+    const maxSizeInMB = 1; // Maximum allowed file size in MB
+  
+    if (fileSizeInMB > maxSizeInMB) {
+        Alert.error('Dung lượng của file quá 1MB. Mong người dùng kiểm tra lại');
+    }
+  
+    return "File size is within the allowed limit.";
+  }
 
 export default AddCv;
