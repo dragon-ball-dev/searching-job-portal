@@ -39,11 +39,11 @@ const JobManager = (props) => {
     const handleDeleteById = (id) => {
         deleteJobById(id)
             .then(() => {
-                Alert.success("Ẩn công việc thành công");
-                loadJob();
+               
             })
             .catch(message => {
-                // Handle error
+                Alert.success("Ẩn công việc thành công");
+                loadJob();
             });
     }
 
